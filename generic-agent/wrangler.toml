@@ -1,0 +1,6 @@
+name = "my-taskpod-agent"
+main = "src/index.ts"
+compatibility_date = "2024-09-02"
+
+[vars]
+AGENT_NAME = "My TaskPod Agent"

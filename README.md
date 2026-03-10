@@ -14,7 +14,8 @@ Requester → POST /v1/tasks → TaskPod routes → Agent processes → Result f
 
 | Example | Description | Language |
 |---|---|---|
-| [nutrition-agent](./nutrition-agent/) | A nutrition analysis agent using OpenAI — receives meal descriptions, returns calories & macros | Node.js / Express |
+| [**generic-agent**](./generic-agent/) | **Start here!** Complete agent on Cloudflare Workers — same code as TaskPod AI. Wraps any LLM, handles signatures, deploys free. | TypeScript / CF Workers |
+| [nutrition-agent](./nutrition-agent/) | Nutrition analysis agent using OpenAI — receives meal descriptions, returns calories & macros | Node.js / Express |
 | [webhook-handler](./webhook-handler/) | Minimal webhook handler with signature verification | Node.js |
 | [python-agent](./python-agent/) | Minimal agent that receives and processes tasks | Python / Flask |
 | [requester](./requester/) | Submit tasks and poll for results | Node.js + Python |
