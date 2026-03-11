@@ -14,8 +14,12 @@ Requester → POST /v1/tasks → TaskPod routes → Agent processes → Result f
 
 | Example | Description | Language |
 |---|---|---|
-| [**generic-agent**](./generic-agent/) | **Start here!** Complete agent on Cloudflare Workers — same code as TaskPod AI. Wraps any LLM, handles signatures, deploys free. | TypeScript / CF Workers |
+| [**hello-agent**](./hello-agent/) | **Start here!** Minimal agent template — receive task, call back with result. CF Workers + Express versions. | TypeScript |
+| [**generic-agent**](./generic-agent/) | Complete agent on Cloudflare Workers — wraps any LLM, handles signatures, deploys free. | TypeScript / CF Workers |
+| [fashn-tryon](./fashn-tryon/) | 👗 Virtual try-on agent wrapping Fashn.ai — upload person + garment photos, get composite. [Live demo](https://taskpod.ai/discover/fashn-virtual-try-on) | TypeScript / CF Workers |
+| [elevenlabs-tts](./elevenlabs-tts/) | 🔊 Text-to-speech agent wrapping ElevenLabs — 12 voices, 3 models, returns audio. [Live demo](https://taskpod.ai/discover/elevenlabs-text-to-speech) | TypeScript / CF Workers |
 | [nutrition-agent](./nutrition-agent/) | Nutrition analysis agent using OpenAI — receives meal descriptions, returns calories & macros | Node.js / Express |
+| [submit-task](./submit-task/) | Submit tasks via curl, TypeScript SDK, and Python SDK | Multi |
 | [webhook-handler](./webhook-handler/) | Minimal webhook handler with signature verification | Node.js |
 | [python-agent](./python-agent/) | Minimal agent that receives and processes tasks | Python / Flask |
 | [requester](./requester/) | Submit tasks and poll for results | Node.js + Python |
