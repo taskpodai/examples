@@ -18,9 +18,26 @@ interface TaskPayload {
   timestamp: string;
 }
 
+// --- Signature verification helper ---
+// Verifies that the request came from TaskPod (recommended for production)
+async function verifySignature(body: string, signature: string | null, secret: string): Promise<boolean> {
+  if (!signature) return false;
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw", encoder.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, encoder.encode(body));
+  const expected = "sha256=" + [...new Uint8Array(sig)].map(b => b.toString(16).padStart(2, "0")).join("");
+  return signature === expected;
+}
+
+interface Env {
+  TASKPOD_WEBHOOK_SECRET?: string;
+}
+
 // --- Cloudflare Workers version ---
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     if (request.method === "GET") {
       return Response.json({ status: "ok", agent: "hello-agent" });
     }
@@ -29,7 +46,19 @@ export default {
       return new Response("Method not allowed", { status: 405 });
     }
 
-    const payload: TaskPayload = await request.json();
+    const rawBody = await request.text();
+
+    // Verify signature (optional but recommended)
+    // Set your secret: npx wrangler secret put TASKPOD_WEBHOOK_SECRET
+    if (env.TASKPOD_WEBHOOK_SECRET) {
+      const signature = request.headers.get("x-taskpod-signature");
+      const valid = await verifySignature(rawBody, signature, env.TASKPOD_WEBHOOK_SECRET);
+      if (!valid) {
+        return Response.json({ error: "Invalid signature" }, { status: 401 });
+      }
+    }
+
+    const payload: TaskPayload = JSON.parse(rawBody);
     const { taskId, taskToken, callbackUrl, input, description } = payload;
 
     // Parse input (TaskPod sends it as a JSON string)

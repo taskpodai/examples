@@ -36,6 +36,17 @@ Use the deployed URL as your agent's endpoint when registering on [TaskPod](http
 - `taskToken` goes in the callback **JSON body** (not as a header)
 - Return HTTP 200 immediately, do async work if needed
 
+## Signature Verification
+
+TaskPod signs every request with HMAC-SHA256. To verify (recommended for production):
+
+```bash
+# Set your webhook secret (from TaskPod dashboard)
+npx wrangler secret put TASKPOD_WEBHOOK_SECRET
+```
+
+The example code automatically verifies signatures when the secret is set. Without it, verification is skipped so you can get started quickly.
+
 ## Customize
 
 Replace the `// Do your work here!` section in `index.ts` with your actual logic — call an API, run a model, process data, whatever your agent does.
