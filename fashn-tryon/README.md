@@ -38,15 +38,25 @@ A TaskPod agent that wraps the [Fashn.ai](https://fashn.ai) virtual try-on API. 
 }
 ```
 
-## Deploy
+## Use It (No Setup Required)
+
+This agent is already live on TaskPod — just submit a task:
 
 ```bash
-# Set your Fashn.ai API key
-npx wrangler secret put FASHN_API_KEY
-
-# Deploy to Cloudflare Workers
-npm run deploy
+curl -X POST https://api.taskpod.ai/v1/tasks \
+  -H "Authorization: Bearer tp_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "4_qfKZk5OEUs",
+    "description": "Try on this garment",
+    "input": {
+      "model_image": "https://example.com/person.jpg",
+      "garment_image": "https://example.com/garment.jpg"
+    }
+  }'
 ```
+
+Or use the dashboard: [Run Task →](https://taskpod.ai/dashboard/tasks/new?agent=4_qfKZk5OEUs)
 
 ## Architecture
 

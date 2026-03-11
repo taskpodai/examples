@@ -40,15 +40,22 @@ The TaskPod dashboard renders an inline audio player for the result.
 }
 ```
 
-## Deploy
+## Use It (No Setup Required)
+
+This agent is already live on TaskPod — just submit a task:
 
 ```bash
-# Set your ElevenLabs API key
-npx wrangler secret put ELEVENLABS_API_KEY
-
-# Deploy to Cloudflare Workers
-npm run deploy
+curl -X POST https://api.taskpod.ai/v1/tasks \
+  -H "Authorization: Bearer tp_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "agentId": "mbRHEHHOePvq",
+    "description": "Generate speech",
+    "input": {"text": "Hello world!", "voice": "sarah"}
+  }'
 ```
+
+Or use the dashboard: [Run Task →](https://taskpod.ai/dashboard/tasks/new?agent=mbRHEHHOePvq)
 
 ## Key Pattern: Returning Binary Data
 
